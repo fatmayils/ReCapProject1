@@ -30,10 +30,7 @@ namespace Business.Concrete
            return _colorDal.GetAll();
         }
 
-        public List<Color> GetById(int id)
-        {
-            return _colorDal.GetById(id);
-        }
+      
 
         public void Update(Color color)
         {

@@ -8,8 +8,8 @@ namespace ConsoleUI
     class Program
     {
         static void Main(string[] args)
-        { 
-            Console.WriteLine("*************************BrandManager************************************");
+        {
+            /*Console.WriteLine("*************************BrandManager************************************");
             CarManager carManager = new CarManager(new EfCarDal());
             foreach (var item in carManager.GetAll())
             {
@@ -30,7 +30,14 @@ namespace ConsoleUI
 
             carManager.Add(new Car {CarId=31,Description="" });
             carManager.Add(new Car {Description = "Yeni model",DailyPrice=290,ColorId=2,BrandId=5 });
-            carManager.Add(new Car {  Description = "Çok", DailyPrice = 500, BrandId = 10, ColorId = 9, ModelYear = 2500 });
+            carManager.Add(new Car {  Description = "Çok", DailyPrice = 500, BrandId = 10, ColorId = 9, ModelYear = 2500 });*/
+            CarManager carManager = new CarManager(new EfCarDal());
+            Console.WriteLine("************************************************CarManagerDetails**************************************************");
+            foreach (var item in carManager.GetCarDetails())
+            {
+                Console.WriteLine("{0}\t{1}\t{2}\t{3}", item.CarId, item.BrandName, item.ColorName, item.DailyPrice);
+            }
+
         }
     }
 }
