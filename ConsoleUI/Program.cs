@@ -1,4 +1,5 @@
-﻿using Business.Concrete;
+﻿using Business.Abstract;
+using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
@@ -9,21 +10,259 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            //BrandAdd();
+            //BrandDelete();
+            //BrandGetAll();
+            //BrandUpdate();
+            //ColorAdd();
+            //ColorDelete();
+            //ColorGetAll();
+            //ColorUpdate();
+            //CarAdd();
+            //CarDelete();
+            //CarUpdate();
+            //CarGetAll();
+            //CarDetails();
+            //UserAdd
+            //UserUpdate();
+            //UserDelete();
+            //UserGetAll();
+            //UserById
+            //RentalAdd();
+            //RentalDelete();
+            //RentalUpdate();
+            //RentalById();
+            // RentalGetAll();//çalışmadı
+            //CustomerAdd();
+            // CustomerUpdate();
+            //CustomerDelete();
+            //CustomerGetAll();
+            //CustomerById();
 
-             //BrandManager brandManager = BrandAdd();
-            //BrandManager brandManager = BrandDelete();
-           //BrandGetAll();
-          //BrandUpdate();
-         //ColorManager colorManager = ColorAdd();
-        //ColorManager colorManager = ColorDelete();
-       //ColorGetAll();
-      //ColorUpdate();
-     //CarAdd();
-    //CarDelete();
-   //CarUpdate();
-  //CarGetAll();
- //CarDetails();
+            IRentalService rentalManager = new RentalManager(new EfRentalDal());
+            var result2 = rentalManager.Add(new Rental
+            {
+                CarId =5,
+                CustomerId =7,
+               RentDate = new DateTime(2001,12,13),
+              //ReturnDate = new DateTime(2001,02,01)
+            });
+                Console.WriteLine(result2.Message);
+          
+        }
 
+        private static void CustomerById()
+        {
+            ICustomerService customerManager = new CustomerManager(new EfCustomerDal());
+            var result1 = customerManager.GetById(7);
+            if (result1.Success == true)
+            {
+                Console.WriteLine(result1.Data.CompanyName);
+            }
+        }
+
+        private static void CustomerGetAll()
+        {
+            ICustomerService customerManager = new CustomerManager(new EfCustomerDal());
+            var result1 = customerManager.GetAll();
+            if (result1.Success == true)
+            {
+                foreach (var item in result1.Data)
+                {
+                    Console.WriteLine(item.CompanyName);
+                }
+            }
+        }
+
+        private static void CustomerDelete()
+        {
+            ICustomerService customerManager = new CustomerManager(new EfCustomerDal());
+            var result1 = customerManager.Delete(new Customer
+            {
+                CustomerId = 2,
+                UserId = 2,
+                CompanyName = "solvia"
+            });
+            if (result1.Success == true)
+            {
+                Console.WriteLine(result1.Message);
+            }
+        }
+
+        private static void CustomerUpdate()
+        {
+            ICustomerService customerManager = new CustomerManager(new EfCustomerDal());
+            var result1 = customerManager.Update(new Customer
+            {
+                CustomerId = 2,
+                UserId = 2,
+                CompanyName = "solvia"
+            });
+            if (result1.Success == true)
+            {
+                Console.WriteLine(result1.Message);
+            }
+        }
+
+        private static void UserById()
+        {
+            IUserService userManager = new UserManager(new EfUserDal());
+            var result = userManager.GetById(6);
+            if (result.Success == true)
+            {
+                Console.WriteLine(result.Data.FirstName + "\t" + result.Data.LastName);
+
+            }
+        }
+
+        private static void UserGetAll()
+        {
+            IUserService userManager = new UserManager(new EfUserDal());
+            var result = userManager.GetAll();
+            if (result.Success == true)
+            {
+                foreach (var item in result.Data)
+                {
+                    Console.WriteLine(item.FirstName + "\t" + item.LastName);
+                }
+            }
+        }
+
+        private static void UserDelete()
+        {
+            IUserService userManager = new UserManager(new EfUserDal());
+            var result = userManager.Delete(new User
+            {
+                UserId = 5,
+                FirstName = "derya",
+                LastName = "mola",
+                Email = "moladerya@gmail.com",
+                Password = "12345"
+            });
+            if (result.Success == true)
+            {
+                Console.WriteLine(result.Message);
+            }
+        }
+
+        private static void UserUpdate()
+        {
+            IUserService userManager = new UserManager(new EfUserDal());
+            var result = userManager.Update(new User
+            {
+                UserId = 5,
+                FirstName = "derya",
+                LastName = "mola",
+                Email = "moladerya@gmail.com",
+                Password = "12345"
+            }); ;
+            if (result.Success == true)
+            {
+                Console.WriteLine(result.Message);
+            }
+        }
+
+        private static void RentalGetAll()
+        {
+            IRentalService rentalManager = new RentalManager(new EfRentalDal());
+            var result = rentalManager.GetAll();
+            if (result.Success == true)
+            {
+                foreach (var item in result.Data)
+                {
+                    Console.WriteLine(item.ReturnDate + "\t" + item.ReturnDate);
+                }
+            }
+        }
+
+        private static void RentalById()
+        {
+            IRentalService rentalManager = new RentalManager(new EfRentalDal());
+            var result = rentalManager.GetById(19);
+            if (result.Success == true)
+            {
+                Console.WriteLine(result.Data.RentalId + "\t" + result.Data.RentDate);
+            }
+        }
+
+        private static void RentalUpdate()
+        {
+            IRentalService rentalManager = new RentalManager(new EfRentalDal());
+            var result = rentalManager.Update(new Rental
+            {
+                RentalId = 1,
+                CarId = 3,
+                CustomerId = 2,
+                RentDate = new DateTime(2001 / 12 / 13),
+                ReturnDate = new DateTime(2001 / 2 / 1)
+            });
+            if (result.Success == true)
+            {
+                Console.WriteLine(result.Message);
+            }
+        }
+
+        private static void RentalDelete()
+        {
+            IRentalService rentalManager = new RentalManager(new EfRentalDal());
+            var result = rentalManager.Delete(new Rental
+            {
+                RentalId = 2,
+                CarId = 3,
+                CustomerId = 2,
+                RentDate = new DateTime(2001 / 12 / 13),
+                ReturnDate = new DateTime(2001 / 2 / 1)
+            });
+            if (result.Success == true)
+            {
+                Console.WriteLine(result.Message);
+            }
+        }
+
+        private static void RentalAdd()
+        {
+            IRentalService rentalManager = new RentalManager(new EfRentalDal());
+            var result2 = rentalManager.Add(new Rental
+            {
+                CarId = 3,
+                CustomerId = 2,
+                RentDate = new DateTime(2001 / 12 / 13),
+                ReturnDate = new DateTime(2001 / 2 / 1)
+            });
+            if (result2.Success == true)
+            {
+                Console.WriteLine(result2.Message);
+            }
+        }
+
+        private static void UserAdd()
+        {
+            IUserService userManager = new UserManager(new EfUserDal());
+            var result = userManager.Add(new User
+            {
+                FirstName = "derya",
+                LastName = "mola",
+                Email = "moladerya@gmail.com",
+                Password = "12345"
+            });
+            if (result.Success == true)
+            {
+                Console.WriteLine(result.Message);
+            }
+        }
+
+        private static void CustomerAdd()
+        {
+            ICustomerService customerManager = new CustomerManager(new EfCustomerDal());
+            var result1 = customerManager.Add(new Customer
+            {
+                UserId = 2,
+                CompanyName = "solvia"
+            });
+            if (result1.Success == true)
+            {
+                Console.WriteLine(result1.Message);
+            }
         }
 
         private static void CarDetails()
@@ -57,7 +296,7 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal());
             var result3 = carManager.Update(new Car { CarId = 9, BrandId = 12, DailyPrice = 599 });
-            if (result3.Success)
+            if (result3.Success==true)
             {
                 Console.WriteLine(result3.Message);
             }
@@ -67,7 +306,7 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal());
             var result2 = carManager.Delete(new Car { CarId = 4 });
-            if (result2.Success)
+            if (result2.Success==true)
             {
                 Console.WriteLine(result2.Message);
             }
@@ -76,8 +315,8 @@ namespace ConsoleUI
         private static void CarAdd()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            var result = carManager.Add(new Car { BrandId = 3, ColorId = 8, Description = "araba araba", });
-            if (result.Success)
+            var result = carManager.Add(new Car { BrandId = 3, ColorId = 8, Description = "araba araba",DailyPrice=678,ModelYear=2009 });
+            if (result.Success==true)
             {
                 Console.WriteLine(result.Message);
             }
@@ -87,7 +326,7 @@ namespace ConsoleUI
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             var result4 = brandManager.Update(new Brand { BrandId = 7, BrandName = "Güzel Araba" });
-            if (result4.Success)
+            if (result4.Success==true)
             {
                 Console.WriteLine(result4.Message);
             }
@@ -106,7 +345,7 @@ namespace ConsoleUI
             }
         }
 
-        private static BrandManager BrandDelete()
+        private static void BrandDelete()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             var result2 = brandManager.Delete(new Brand { BrandId = 17 });
@@ -114,11 +353,9 @@ namespace ConsoleUI
             {
                 Console.WriteLine(result2.Message);
             }
-
-            return brandManager;
         }
 
-        private static BrandManager BrandAdd()
+        private static void BrandAdd()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             var result1 = brandManager.Add(new Brand { BrandName = "araba" });
@@ -127,7 +364,6 @@ namespace ConsoleUI
                 Console.WriteLine(result1.Message);
             }
 
-            return brandManager;
         }
 
 
@@ -155,7 +391,7 @@ namespace ConsoleUI
             }
         }
 
-        private static ColorManager ColorDelete()
+        private static void ColorDelete()
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
             var result2 = colorManager.Delete(new Color { ColorId = 13 });
@@ -164,10 +400,9 @@ namespace ConsoleUI
                 Console.WriteLine(result2.Message);
             }
 
-            return colorManager;
         }
 
-        private static ColorManager ColorAdd()
+        private static void ColorAdd()
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
             var result1 = colorManager.Add(new Color { ColorName = "araba" });
@@ -175,8 +410,6 @@ namespace ConsoleUI
             {
                 Console.WriteLine(result1.Message);
             }
-
-            return colorManager;
         }
     }
 }
