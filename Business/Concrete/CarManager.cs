@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -16,54 +18,47 @@ namespace Business.Concrete
             _carDal = carDal;
     }
 
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
-            if (car.Description.Length > 2&&car.DailyPrice>0) 
+            if (car.Description.Length > 2 && car.DailyPrice > 0)
             {
                 _carDal.Add(car);
-                Console.WriteLine("Ekleme Başarılı");
-            }
-            else
-            {
-                Console.WriteLine("Araba için en az 2 karakterden oluşan bir desciription tanımlamalı,\nve günlük fiyatın 0 dan küçük olmamasına dikkat ediniz.\nEkleme başarısız");
+                return new SuccessResult(Messages.ObjectAdded);
+            }           
+            return new ErrorResult(Messages.AddedInvalid);
 
-            }
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             _carDal.Delete(car);
-            Console.WriteLine("Silme Başarılı");
+            return new SuccessResult(Messages.ObjectDeleted);
         }
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            return _carDal.GetAll();
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.ObjectListed);
         }
 
-        public Car GetById(int id)
+        public IDataResult<Car> GetById(int id)
         {
-            return _carDal.Get(p=>p.CarId==id);
+            return new SuccessDataResult<Car>(_carDal.Get(p => p.CarId == id));
         }
 
-        public List<CarDetailsDto> GetCarDetails()
+        public IDataResult<List<CarDetailsDto>> GetCarDetails()
         {
-           return  _carDal.GetCarDetails();
+           return  new SuccessDataResult<List<CarDetailsDto>>(_carDal.GetCarDetails(),Messages.ObjectListed);
         }
 
-        public void Update(Car car)
+        public IResult Update(Car car)
         {
             if (car.Description.Length > 2 && car.DailyPrice > 0)
             {
                 _carDal.Update(car);
-                Console.WriteLine("Güncelleme Başarılı");
+                return new SuccessResult(Messages.ObjectUpdated);
             }
+            return new ErrorResult(Messages.ObjectUpdatedInvalid);
 
-            else 
-            {
-                Console.WriteLine("Araba için en az 2 karakterden oluşan bir desciription tanımlamalı,\nve günlük fiyatın 0 dan küçük olmamasına dikkat ediniz.\nGüncelleme başarısız");
-                        
-            }
         }
     }
 }
